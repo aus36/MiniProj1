@@ -13,6 +13,9 @@ def printMenu():
     print("3: Trivium")
     userInput = input("Please select an encryption method from the list above: ")
     print("********************************************************")
+    if(userChoice == "quit"):
+        return 0
+    return 1
 
 #ENCRYPTION------------------------
 #function for AES encrypting
@@ -43,9 +46,8 @@ def TRIVencrypt():
 
 #function for starting and running program
 def startMenu():
-    userInput = ""
-    while(userInput != "quit"):
-        printMenu()
-        userInput = input()
+    output = 1
+    while(output != 0):
+        output = printMenu()
 
 startMenu()
