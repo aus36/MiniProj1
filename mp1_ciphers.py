@@ -2,20 +2,9 @@
 import os
 import sys
 from Crypto.Cipher import AES
-
-#function for printing menu items
-def printMenu():
-    print("********************************************************")
-    print("------------- ENCRYPTION/DECRYPTION TOOL ---------------")
-    userChoice = input("Enter E for encryption or D for decryption: ")
-    print("1: AES")
-    print("2: DES")
-    print("3: Trivium")
-    userInput = input("Please select an encryption method from the list above: ")
-    print("********************************************************")
-    if(userChoice == "quit"):
-        return 0
-    return 1
+from Crypto.Cipher import DES
+from Crypto.Cipher import Salsa20
+from Crypto.Random import get_random_bytes
 
 #ENCRYPTION------------------------
 #function for AES encrypting
@@ -26,8 +15,8 @@ def AESencrypt():
 def DESencrypt():
     print("e")
 
-#function for Trivium encrypting
-def TRIVencrypt():
+#function for Salsa20 encrypting
+def SALSAencrypt():
     print("e")
 
 #DECRYPTION--------------------------
@@ -39,15 +28,37 @@ def AESencrypt():
 def DESencrypt():
     print("e")
 
-#function for Trivium decrypting
-def TRIVencrypt():
+#function for Salsa20 decrypting
+def SALSAencrypt():
     print("e")
 #------------------------------------
 
-#function for starting and running program
-def startMenu():
-    output = 1
-    while(output != 0):
-        output = printMenu()
+#function for printing encrypt/decrypt menu
+def printStartMenu():
+    print("*************************************************************")
+    print("---------------- ENCRYPTION/DECRYPTION TOOL -----------------")
+    userInput = input("Enter E for encryption or D for decryption or enter 'quit': ")
+    print("*************************************************************")
+    if(userInput == "quit"):
+        return
+    else:
+        printSecondMenu()
 
-startMenu()
+#function for printing encryption/decryption scheme choice
+def printSecondMenu():
+    print("********************************************************")
+    print("1: AES")
+    print("2: DES")
+    print("3: Salsa20")
+    userInput = input("Please select an encryption method from the list above: ")
+    print("********************************************************")
+    if(userInput == 1):
+        AESencrypt()
+    else:
+        print("E")
+
+#runner function
+def main():
+    printStartMenu()
+
+main()
