@@ -9,28 +9,32 @@ from Crypto.Random import get_random_bytes
 #ENCRYPTION------------------------
 #function for AES encrypting
 def AESencrypt():
-    print("e")
+    file = open("AESinput.txt", "rb") #open input file to get plaintext
+    message = (file.read()).encode("UTF-8") #read plaintext message from file
+    AESencryptObj = AES.new("Sixteen Char Key".encode("utf8"), AES.MODE_CBC, "Sixteen Char IV ".encode("utf8")) #create new AES object
+    cipherText = AESencryptObj.encrypt(message)
+    print("Cipher Text: ", cipherText)
 
 #function for DES encrypting
 def DESencrypt():
-    print("e")
+    print("function not complete")
 
 #function for Salsa20 encrypting
 def SALSAencrypt():
-    print("e")
+    print("function not complete")
 
 #DECRYPTION--------------------------
 #function for AES decrypting
-def AESencrypt():
-    print("e")
+def AESdecrypt():
+    print("function not complete")
 
 #function for DES decrypting
-def DESencrypt():
-    print("e")
+def DESdecrypt():
+    print("function not complete")
 
 #function for Salsa20 decrypting
 def SALSAencrypt():
-    print("e")
+    print("function not complete")
 #------------------------------------
 
 #function for printing encrypt/decrypt menu
