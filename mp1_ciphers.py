@@ -1,68 +1,54 @@
 #imports
+from asyncore import write
 import os
 import sys
 from Crypto.Cipher import AES
-from Crypto.Cipher import DES
-from Crypto.Cipher import Salsa20
-from Crypto.Random import get_random_bytes
 
 #ENCRYPTION------------------------
 #function for AES encrypting
 def AESencrypt():
-    file = open("AESinput.txt", "rb") #open input file to get plaintext
+    inFilename = input("Enter the name of an existing file in this directory to encrypt: ")
+    file = open(inFilename, "r") #open input file to get plaintext
     message = (file.read()).encode("UTF-8") #read plaintext message from file
+
+    #password = input("Enter a 16-character password for encryption: ")
     AESencryptObj = AES.new("Sixteen Char Key".encode("utf8"), AES.MODE_CBC, "Sixteen Char IV ".encode("utf8")) #create new AES object
-    cipherText = AESencryptObj.encrypt(message)
-    print("Cipher Text: ", cipherText)
 
-#function for DES encrypting
-def DESencrypt():
-    print("function not complete")
+    cipherText = AESencryptObj.encrypt(message) #encrypt text
+    print("Cipher Text: ", cipherText) # print for testing
+    file.close() #close input filee
 
-#function for Salsa20 encrypting
-def SALSAencrypt():
-    print("function not complete")
+    outFile = open("inputFile_AES.txt", "wb") #create output file
+    outFile.write(cipherText) #write ciphertext into output file
+
+    outFile.close() #close output file to finish
 
 #DECRYPTION--------------------------
 #function for AES decrypting
 def AESdecrypt():
-    print("function not complete")
+    AESdecryptionObj = AES.new("Sixteen Char Key".encode("utf8"), AES.MODE_CBC, "Sixteen Char IV ".encode("utf8")) #object for decryption
 
-#function for DES decrypting
-def DESdecrypt():
-    print("function not complete")
 
-#function for Salsa20 decrypting
-def SALSAencrypt():
-    print("function not complete")
-#------------------------------------
-
+#MENU--------------------------------
 #function for printing encrypt/decrypt menu
 def printStartMenu():
-    print("*************************************************************")
-    print("---------------- ENCRYPTION/DECRYPTION TOOL -----------------")
-    userInput = input("Enter E for encryption or D for decryption or enter 'quit': ")
-    print("*************************************************************")
-    if(userInput == "quit"):
+    encrypted = False #Variables for ending loop
+    decrypted = False #^^^
+
+    print("***************************************************************")
+    print("----------------- ENCRYPTION/DECRYPTION TOOL ------------------")
+    userInput = input("Enter e/E for encryption or d/D for decryption or enter 'quit': ")
+    print("***************************************************************")
+    while(userInput != "quit" or (encrypted != True and decrypted != True)): #continues program until user enters quit or has encrypted and decrypted at least once
         return
-    else:
-        printSecondMenu()
-
-#function for printing encryption/decryption scheme choice
-def printSecondMenu():
-    print("********************************************************")
-    print("1: AES")
-    print("2: DES")
-    print("3: Salsa20")
-    userInput = input("Please select an encryption method from the list above: ")
-    print("********************************************************")
-    if(userInput == 1):
+    if userInput == "e" or userInput == "E":
         AESencrypt()
+        encrypted = True
+    elif userInput == "d" or userInput == "D":
+        AESdecrypt()
+        decrypted = True
     else:
-        print("E")
+        print("Invalid Input. Restarting...") #catches exception cases and restarts loop
 
-#runner function
-def main():
-    printStartMenu()
-
-main()
+#run
+printStartMenu()
